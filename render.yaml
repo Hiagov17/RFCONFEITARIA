@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: loja-doces
+    runtime: node
+    plan: starter          # disco persistente exige plano pago (~US$7/mês)
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /healthz
+    disk:
+      name: dados
+      mountPath: /data
+      sizeGB: 1
+    envVars:
+      - key: DB_PATH
+        value: /data/loja.db
+      - key: ADMIN_USER
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: SECRET
+        generateValue: true
